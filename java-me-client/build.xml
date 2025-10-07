@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="TelegramGatewayClient" default="jar" basedir=".">
+    <description>Telegram Gateway Client for Java ME</description>
+
+    <property name="src.dir" value="src"/>
+    <property name="build.dir" value="build"/>
+    <property name="dist.dir" value="dist"/>
+
+    <target name="init">
+        <mkdir dir="${build.dir}"/>
+        <mkdir dir="${dist.dir}"/>
+    </target>
+
+    <target name="compile" depends="init">
+        <javac srcdir="${src.dir}" destdir="${build.dir}"
+               bootclasspath="${wtk.home}/lib/midpapi20.jar:${wtk.home}/lib/cldcapi11.jar"
+               target="1.3" source="1.3"/>
+    </target>
+
+    <target name="preverify" depends="compile">
+        <exec executable="${wtk.home}/bin/preverify">
+            <arg value="-classpath"/>
+            <arg value="${wtk.home}/lib/midpapi20.jar:${wtk.home}/lib/cldcapi11.jar"/>
+            <arg value="-d"/>
+            <arg value="${build.dir}/verified"/>
+            <arg value="${build.dir}"/>
+        </exec>
+    </target>
+
+    <target name="jar" depends="preverify">
+        <jar destfile="${dist.dir}/TelegramClient.jar" basedir="${build.dir}/verified">
+            <manifest>
+                <attribute name="MIDlet-Name" value="Telegram Client"/>
+                <attribute name="MIDlet-Version" value="1.0.0"/>
+                <attribute name="MIDlet-Vendor" value="Telegram Gateway"/>
+                <attribute name="MIDlet-1" value="Telegram,/icon.png,TelegramMIDlet"/>
+                <attribute name="MicroEdition-Profile" value="MIDP-2.0"/>
+                <attribute name="MicroEdition-Configuration" value="CLDC-1.1"/>
+            </manifest>
+        </jar>
+    </target>
+
+    <target name="clean">
+        <delete dir="${build.dir}"/>
+        <delete dir="${dist.dir}"/>
+    </target>
+</project>

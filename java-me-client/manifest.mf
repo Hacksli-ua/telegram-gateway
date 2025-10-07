@@ -1,0 +1,7 @@
+MIDlet-Name: Telegram Client
+MIDlet-Version: 1.0.0
+MIDlet-Vendor: Telegram Gateway
+MIDlet-1: Telegram,,TelegramMIDlet
+MIDlet-Description: Telegram client for Java ME
+MicroEdition-Profile: MIDP-2.0
+MicroEdition-Configuration: CLDC-1.1
